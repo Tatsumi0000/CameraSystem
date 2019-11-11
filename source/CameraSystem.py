@@ -11,7 +11,7 @@ from PrepareGarage import PrepareGarage
 class CameraSystem:
     def __init__(self):
         self.camera = Camera()
-        
+
         # NOTE: 以前に座標ポチポチしたデータを読み込む（ファイルが存在場合は何もしない）
         #       座標ポチポチをやり直したい場合は、camera.load_settings()を呼び出さなければOK
         self.camera.load_settings()
@@ -65,12 +65,13 @@ class CameraSystem:
     def _detection_block(self):
         while True:
             # 領域、座標指定
-            block_bingo_img = self.camera.get_block_bingo_img(is_debug=self.is_debug)     # 領域指定して画像取得
+            block_bingo_img = self.camera.get_block_bingo_img(is_debug=self.is_debug)  # 領域指定して画像取得
             circles_coordinates = self.camera.get_circle_coordinates_with_range()  # 座標ポチポチ
             self.camera.save_settings()  # 座標ポチポチした結果を保存
             # ブロックの識別が来る
             recognizer = BlockRecognizer()
-            black_block_place, color_block_place = recognizer.recognize_block_circle(block_bingo_img, circles_coordinates)
+            black_block_place, color_block_place = recognizer.recognize_block_circle(block_bingo_img,
+                                                                                     circles_coordinates)
             print(black_block_place, color_block_place)
 
             if black_block_place is not None and color_block_place is not None:
